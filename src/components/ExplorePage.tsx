@@ -90,9 +90,9 @@ interface ExplorePageProps {
 const ExplorePage = ({ onBack }: ExplorePageProps) => {
   const [selectedCourse, setSelectedCourse] = useState<any>(null);
   const [filters, setFilters] = useState({
-    semester: "",
-    department: "",
-    type: "",
+    semester: "all",
+    department: "all",
+    type: "all",
     search: ""
   });
 
@@ -102,9 +102,9 @@ const ExplorePage = ({ onBack }: ExplorePageProps) => {
 
   const filteredCourses = mockCourses.filter(course => {
     return (
-      (!filters.semester || course.semester.toString() === filters.semester) &&
-      (!filters.department || course.department === filters.department) &&
-      (!filters.type || course.type === filters.type) &&
+      (filters.semester === "all" || course.semester.toString() === filters.semester) &&
+      (filters.department === "all" || course.department === filters.department) &&
+      (filters.type === "all" || course.type === filters.type) &&
       (!filters.search || course.title.toLowerCase().includes(filters.search.toLowerCase()) ||
        course.professor.toLowerCase().includes(filters.search.toLowerCase()))
     );
@@ -154,7 +154,7 @@ const ExplorePage = ({ onBack }: ExplorePageProps) => {
                   <SelectValue placeholder="Semester" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Semesters</SelectItem>
+                  <SelectItem value="all">All Semesters</SelectItem>
                   {semesters.map(sem => (
                     <SelectItem key={sem} value={sem.toString()}>Semester {sem}</SelectItem>
                   ))}
@@ -166,7 +166,7 @@ const ExplorePage = ({ onBack }: ExplorePageProps) => {
                   <SelectValue placeholder="Department" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Departments</SelectItem>
+                  <SelectItem value="all">All Departments</SelectItem>
                   {departments.map(dept => (
                     <SelectItem key={dept} value={dept}>{dept}</SelectItem>
                   ))}
@@ -178,7 +178,7 @@ const ExplorePage = ({ onBack }: ExplorePageProps) => {
                   <SelectValue placeholder="Course Type" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Types</SelectItem>
+                  <SelectItem value="all">All Types</SelectItem>
                   {courseTypes.map(type => (
                     <SelectItem key={type} value={type}>{type}</SelectItem>
                   ))}
@@ -187,7 +187,7 @@ const ExplorePage = ({ onBack }: ExplorePageProps) => {
 
               <Button 
                 variant="outline" 
-                onClick={() => setFilters({semester: "", department: "", type: "", search: ""})}
+                onClick={() => setFilters({semester: "all", department: "all", type: "all", search: ""})}
                 className="w-full"
               >
                 Clear Filters
