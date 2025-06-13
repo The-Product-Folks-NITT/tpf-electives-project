@@ -11,89 +11,59 @@ interface CourseDetailsProps {
 }
 
 const CourseDetails = ({ course, onBack }: CourseDetailsProps) => {
-  const mockReviews = [
-    {
-      id: 1,
-      student: "Anonymous Student",
-      rating: 5,
-      semester: "Fall 2023",
-      comment: "Excellent course! The professor explains concepts very clearly and the assignments are practical. Highly recommend for anyone interested in the field.",
-      gradingPattern: "A: 30%, B: 40%, C: 25%, Others: 5%",
-      difficulty: "Moderate",
-      professorName: "Dr. Rajesh Kumar",
-      attendanceStrictness: 2,
-      teachingMethod: "Provides slides",
-      paperType: "Few questions may repeat",
-      assignments: "Standard assignments, manageable workload",
-      examStructure: "2 CTs + Midsem",
-      gradingPsycho: 3,
-      extraClasses: "Yeah some"
-    },
-    {
-      id: 2,
-      student: "Anonymous Student",
-      rating: 4,
-      semester: "Spring 2023",
-      comment: "Good course content but can be challenging. Make sure to attend all lectures and complete assignments on time.",
-      gradingPattern: "A: 25%, B: 45%, C: 30%",
-      difficulty: "Hard",
-      professorName: "Dr. Rajesh Kumar",
-      attendanceStrictness: 4,
-      teachingMethod: "Board teaching",
-      paperType: "Won't repeat, waste of time to go through prev papers",
-      assignments: "Heavy assignments but learning-oriented",
-      examStructure: "Midsems only",
-      gradingPsycho: 4,
-      extraClasses: "A lot"
-    },
-    {
-      id: 3,
-      student: "Anonymous Student",
-      rating: 5,
-      semester: "Fall 2022",
-      comment: "One of the best electives I've taken. Very relevant to current industry trends and the professor is very supportive.",
-      gradingPattern: "A: 35%, B: 40%, C: 20%, Others: 5%",
-      difficulty: "Easy",
-      professorName: "Dr. Rajesh Kumar",
-      attendanceStrictness: 1,
-      teachingMethod: "Provides slides",
-      paperType: "Repeatable",
-      assignments: "Light assignments, easy to manage",
-      examStructure: "2 CTs + Midsem",
-      gradingPsycho: 2,
-      extraClasses: "Nah, it's very chill"
-    }
-  ];
+  // Aggregated course data
+  const courseMetrics = {
+    professor: "Dr. Rajesh Kumar",
+    attendanceStrictness: 3, // Average of all reviews
+    teachingMethod: "Provides slides & Board teaching",
+    paperType: "Few questions may repeat",
+    assignments: "Moderate workload",
+    examStructure: "2 CTs + Midsem",
+    gradingPsycho: 3, // Average
+    extraClasses: "Sometimes",
+    averageRating: 4.7,
+    totalReviews: 45,
+    gradingPattern: "A: 30%, B: 42%, C: 25%, Others: 3%",
+    difficulty: "Moderate"
+  };
 
-  const getDifficultyColor = (difficulty: string) => {
+  const getStrictnessEmoji = (level: number) => {
+    if (level <= 2) return "😎";
+    if (level <= 3) return "😐";
+    return "😤";
+  };
+
+  const getStrictnessText = (level: number) => {
+    if (level <= 2) return "Chill";
+    if (level <= 3) return "Moderate";
+    return "Strict";
+  };
+
+  const getPsychoEmoji = (level: number) => {
+    if (level <= 2) return "😇";
+    if (level <= 3) return "🤔";
+    return "😈";
+  };
+
+  const getPsychoText = (level: number) => {
+    if (level <= 2) return "Fair";
+    if (level <= 3) return "Standard";
+    return "Tough";
+  };
+
+  const getExtraClassesEmoji = (classes: string) => {
+    if (classes.toLowerCase().includes('chill') || classes.toLowerCase().includes('nah')) return "🏖️";
+    if (classes.toLowerCase().includes('some')) return "📚";
+    return "🔥";
+  };
+
+  const getDifficultyEmoji = (difficulty: string) => {
     switch(difficulty.toLowerCase()) {
-      case 'easy': return 'bg-green-100 text-green-800';
-      case 'moderate': return 'bg-yellow-100 text-yellow-800';
-      case 'hard': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'easy': return "🟢";
+      case 'moderate': return "🟡";
+      case 'hard': return "🔴";
+      default: return "⚪";
     }
-  };
-
-  const getStrictnessColor = (level: number) => {
-    if (level <= 2) return 'text-green-600';
-    if (level <= 3) return 'text-yellow-600';
-    return 'text-red-600';
-  };
-
-  const getPsychoColor = (level: number) => {
-    if (level <= 2) return 'text-green-600';
-    if (level <= 3) return 'text-yellow-600';
-    return 'text-red-600';
-  };
-
-  const getTeachingMethodIcon = (method: string) => {
-    return method.includes('slides') ? <FileText className="h-4 w-4" /> : <BookMarked className="h-4 w-4" />;
-  };
-
-  const getExtraClassesColor = (classes: string) => {
-    if (classes.includes('chill')) return 'text-green-600';
-    if (classes.includes('some')) return 'text-yellow-600';
-    return 'text-red-600';
   };
 
   return (
@@ -132,172 +102,172 @@ const CourseDetails = ({ course, onBack }: CourseDetailsProps) => {
                     <Clock className="h-5 w-5" />
                     <span>{course.credits} Credits</span>
                   </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">{getDifficultyEmoji(courseMetrics.difficulty)}</span>
+                    <span className="font-medium text-slate-700">{courseMetrics.difficulty}</span>
+                  </div>
                 </div>
                 <p className="text-xl text-slate-700 mb-6 leading-relaxed">{course.description}</p>
-                <div className="flex items-center gap-3 bg-white/60 rounded-lg p-4">
-                  <User className="h-5 w-5 text-blue-600" />
-                  <span className="text-lg font-semibold text-slate-800">Professor: {course.professor}</span>
-                </div>
               </div>
               
               <div className="text-center lg:text-right bg-white/60 rounded-lg p-6">
                 <div className="flex items-center justify-center lg:justify-end gap-3 mb-3">
                   <Star className="h-8 w-8 fill-yellow-400 text-yellow-400" />
-                  <span className="text-3xl font-bold text-slate-800">{course.rating}</span>
+                  <span className="text-3xl font-bold text-slate-800">{courseMetrics.averageRating}</span>
                 </div>
-                <p className="text-slate-600 text-lg">{course.reviews} reviews</p>
+                <p className="text-slate-600 text-lg">{courseMetrics.totalReviews} reviews</p>
               </div>
             </div>
           </CardHeader>
         </Card>
 
-        {/* Reviews Section */}
+        {/* Course Metrics Dashboard */}
         <Card className="border-0 shadow-xl">
           <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50">
             <CardTitle className="flex items-center gap-3 text-2xl">
               <MessageSquare className="h-6 w-6 text-blue-600" />
-              Student Reviews & Course Insights
+              Course Insights Dashboard 📊
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8">
-            <div className="space-y-8">
-              {mockReviews.map(review => (
-                <div key={review.id} className="border border-slate-200 rounded-xl p-6 bg-gradient-to-br from-white to-slate-50/50 shadow-lg">
-                  {/* Review Header */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                      <div className="bg-gradient-to-br from-blue-100 to-indigo-100 rounded-full p-3">
-                        <User className="h-5 w-5 text-blue-700" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-slate-900 text-lg">{review.student}</p>
-                        <p className="text-slate-600">{review.semester}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        {[...Array(5)].map((_, i) => (
-                          <Star 
-                            key={i} 
-                            className={`h-5 w-5 ${
-                              i < review.rating 
-                                ? 'fill-yellow-400 text-yellow-400' 
-                                : 'text-slate-300'
-                            }`} 
-                          />
-                        ))}
-                      </div>
-                      <Badge className={getDifficultyColor(review.difficulty)}>
-                        {review.difficulty}
-                      </Badge>
-                    </div>
-                  </div>
+            {/* Professor Information */}
+            <div className="mb-8 p-6 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl border border-indigo-200">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-3xl">👨‍🏫</span>
+                <h3 className="text-2xl font-bold text-slate-900">Professor Information</h3>
+              </div>
+              <div className="bg-white/80 rounded-lg p-4 border-l-4 border-indigo-400">
+                <p className="text-xl font-semibold text-slate-800">{courseMetrics.professor}</p>
+              </div>
+            </div>
 
-                  {/* Review Comment */}
-                  <div className="mb-6 p-4 bg-white/80 rounded-lg border-l-4 border-blue-400">
-                    <p className="text-slate-700 text-lg leading-relaxed italic">"{review.comment}"</p>
-                  </div>
-
-                  {/* Detailed Information Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-                    {/* Professor Details */}
-                    <div className="bg-white/90 rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        <User className="h-5 w-5 text-slate-600" />
-                        <span className="font-semibold text-slate-900">Professor</span>
-                      </div>
-                      <p className="text-slate-700 font-medium">{review.professorName}</p>
-                    </div>
-
-                    {/* Attendance Strictness */}
-                    <div className="bg-white/90 rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        <AlertTriangle className="h-5 w-5 text-slate-600" />
-                        <span className="font-semibold text-slate-900">Attendance Strictness</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Progress value={review.attendanceStrictness * 20} className="flex-1" />
-                        <span className={`font-bold text-lg ${getStrictnessColor(review.attendanceStrictness)}`}>
-                          {review.attendanceStrictness}/5
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Teaching Method */}
-                    <div className="bg-white/90 rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        {getTeachingMethodIcon(review.teachingMethod)}
-                        <span className="font-semibold text-slate-900">Teaching Method</span>
-                      </div>
-                      <p className="text-slate-700">{review.teachingMethod}</p>
-                    </div>
-
-                    {/* Paper Pattern */}
-                    <div className="bg-white/90 rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        <BookOpen className="h-5 w-5 text-slate-600" />
-                        <span className="font-semibold text-slate-900">Paper Pattern</span>
-                      </div>
-                      <p className="text-slate-700">{review.paperType}</p>
-                    </div>
-
-                    {/* Exam Structure */}
-                    <div className="bg-white/90 rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Calendar className="h-5 w-5 text-slate-600" />
-                        <span className="font-semibold text-slate-900">Exam Structure</span>
-                      </div>
-                      <p className="text-slate-700">{review.examStructure}</p>
-                    </div>
-
-                    {/* Grading Psycho Level */}
-                    <div className="bg-white/90 rounded-lg p-4 border border-slate-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Brain className="h-5 w-5 text-slate-600" />
-                        <span className="font-semibold text-slate-900">Grading Level</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <Progress value={review.gradingPsycho * 20} className="flex-1" />
-                        <span className={`font-bold text-lg ${getPsychoColor(review.gradingPsycho)}`}>
-                          {review.gradingPsycho}/5
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Additional Information */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    {/* Assignments */}
-                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        <FileText className="h-5 w-5 text-blue-600" />
-                        <span className="font-semibold text-slate-900">Assignments</span>
-                      </div>
-                      <p className="text-slate-700">{review.assignments}</p>
-                    </div>
-
-                    {/* Extra Classes */}
-                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-4 border border-purple-200">
-                      <div className="flex items-center gap-2 mb-3">
-                        <Zap className="h-5 w-5 text-purple-600" />
-                        <span className="font-semibold text-slate-900">Extra Classes</span>
-                      </div>
-                      <p className={`font-medium ${getExtraClassesColor(review.extraClasses)}`}>
-                        {review.extraClasses}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Grading Pattern */}
-                  <div className="bg-gradient-to-r from-slate-50 to-gray-50 rounded-lg p-6 border border-slate-200">
-                    <div className="flex items-center gap-2 mb-4">
-                      <TrendingUp className="h-5 w-5 text-slate-600" />
-                      <span className="font-semibold text-slate-900 text-lg">Grading Pattern</span>
-                    </div>
-                    <p className="text-slate-700 font-medium text-lg">{review.gradingPattern}</p>
+            {/* Main Metrics Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {/* Attendance Strictness */}
+              <div className="bg-gradient-to-br from-white to-red-50 rounded-xl p-6 border border-red-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">{getStrictnessEmoji(courseMetrics.attendanceStrictness)}</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900">Attendance Strictness</h4>
+                    <p className="text-sm text-slate-600">How strict is the prof?</p>
                   </div>
                 </div>
-              ))}
+                <div className="flex items-center gap-3 mb-3">
+                  <Progress value={courseMetrics.attendanceStrictness * 20} className="flex-1" />
+                  <span className="font-bold text-xl text-red-600">
+                    {courseMetrics.attendanceStrictness}/5
+                  </span>
+                </div>
+                <p className="text-lg font-medium text-slate-700">{getStrictnessText(courseMetrics.attendanceStrictness)}</p>
+              </div>
+
+              {/* Teaching Method */}
+              <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-6 border border-blue-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">📝</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900">Teaching Method</h4>
+                    <p className="text-sm text-slate-600">Slides or board?</p>
+                  </div>
+                </div>
+                <p className="text-lg font-medium text-slate-700">{courseMetrics.teachingMethod}</p>
+              </div>
+
+              {/* Paper Pattern */}
+              <div className="bg-gradient-to-br from-white to-green-50 rounded-xl p-6 border border-green-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">📄</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900">Paper Pattern</h4>
+                    <p className="text-sm text-slate-600">How's the paper?</p>
+                  </div>
+                </div>
+                <p className="text-lg font-medium text-slate-700">{courseMetrics.paperType}</p>
+              </div>
+
+              {/* Assignments */}
+              <div className="bg-gradient-to-br from-white to-yellow-50 rounded-xl p-6 border border-yellow-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">📚</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900">Assignments</h4>
+                    <p className="text-sm text-slate-600">Workload level</p>
+                  </div>
+                </div>
+                <p className="text-lg font-medium text-slate-700">{courseMetrics.assignments}</p>
+              </div>
+
+              {/* Exam Structure */}
+              <div className="bg-gradient-to-br from-white to-purple-50 rounded-xl p-6 border border-purple-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">🎯</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900">Exam Structure</h4>
+                    <p className="text-sm text-slate-600">Test pattern</p>
+                  </div>
+                </div>
+                <p className="text-lg font-medium text-slate-700">{courseMetrics.examStructure}</p>
+              </div>
+
+              {/* Grading Psychology */}
+              <div className="bg-gradient-to-br from-white to-orange-50 rounded-xl p-6 border border-orange-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">{getPsychoEmoji(courseMetrics.gradingPsycho)}</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900">Grading Level</h4>
+                    <p className="text-sm text-slate-600">Prof's grading style</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 mb-3">
+                  <Progress value={courseMetrics.gradingPsycho * 20} className="flex-1" />
+                  <span className="font-bold text-xl text-orange-600">
+                    {courseMetrics.gradingPsycho}/5
+                  </span>
+                </div>
+                <p className="text-lg font-medium text-slate-700">{getPsychoText(courseMetrics.gradingPsycho)}</p>
+              </div>
+            </div>
+
+            {/* Extra Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {/* Extra Classes */}
+              <div className="bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl p-6 border border-pink-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">{getExtraClassesEmoji(courseMetrics.extraClasses)}</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900 text-xl">Extra Classes</h4>
+                    <p className="text-sm text-slate-600">How often?</p>
+                  </div>
+                </div>
+                <p className="text-xl font-medium text-slate-700">{courseMetrics.extraClasses}</p>
+              </div>
+
+              {/* Grading Pattern */}
+              <div className="bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl p-6 border border-slate-200 shadow-lg">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">📈</span>
+                  <div>
+                    <h4 className="font-bold text-slate-900 text-xl">Grading Pattern</h4>
+                    <p className="text-sm text-slate-600">Grade distribution</p>
+                  </div>
+                </div>
+                <p className="text-xl font-medium text-slate-700">{courseMetrics.gradingPattern}</p>
+              </div>
+            </div>
+
+            {/* Summary Card */}
+            <div className="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 rounded-xl p-8 border-2 border-blue-300 shadow-xl">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-3xl">💡</span>
+                <h3 className="text-2xl font-bold text-slate-900">Overall Summary</h3>
+              </div>
+              <p className="text-lg text-slate-700 leading-relaxed">
+                This course has received an average rating of <strong>{courseMetrics.averageRating}/5</strong> from <strong>{courseMetrics.totalReviews} students</strong>. 
+                The professor maintains a <strong>{getStrictnessText(courseMetrics.attendanceStrictness).toLowerCase()}</strong> attendance policy and uses 
+                <strong> {courseMetrics.teachingMethod.toLowerCase()}</strong> for teaching. 
+                The grading is considered <strong>{getPsychoText(courseMetrics.gradingPsycho).toLowerCase()}</strong> with a 
+                <strong> {courseMetrics.difficulty.toLowerCase()}</strong> difficulty level overall.
+              </p>
             </div>
           </CardContent>
         </Card>
