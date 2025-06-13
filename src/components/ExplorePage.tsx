@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, Search, Filter, BookOpen, Clock, Star } from "lucide-react";
+import { ArrowLeft, Search, Filter, BookOpen, Clock, Star, Sparkles, GraduationCap } from "lucide-react";
 import CourseDetails from "@/components/CourseDetails";
 
 // Mock data for courses
@@ -115,159 +115,188 @@ const ExplorePage = ({ onBack }: ExplorePageProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 pt-20">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
-        <div className="flex items-center gap-4 mb-8">
-          <Button 
-            variant="ghost" 
-            onClick={onBack}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to Home
-          </Button>
-          <h1 className="text-3xl font-bold text-slate-900">Explore Courses</h1>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-indigo-400/20 to-pink-600/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-cyan-400/10 to-blue-600/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      </div>
 
-        {/* Filters */}
-        <Card className="mb-8 shadow-lg border-0">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Filter className="h-5 w-5" />
-              Filter Courses
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
-                <Input
-                  placeholder="Search courses..."
-                  value={filters.search}
-                  onChange={(e) => setFilters({...filters, search: e.target.value})}
-                  className="pl-10"
-                />
-              </div>
-              
-              <Select value={filters.semester} onValueChange={(value) => setFilters({...filters, semester: value})}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Semester" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Semesters</SelectItem>
-                  {semesters.map(sem => (
-                    <SelectItem key={sem} value={sem.toString()}>Semester {sem}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={filters.department} onValueChange={(value) => setFilters({...filters, department: value})}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Department" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Departments</SelectItem>
-                  {departments.map(dept => (
-                    <SelectItem key={dept} value={dept}>{dept}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={filters.type} onValueChange={(value) => setFilters({...filters, type: value})}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Course Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
-                  {courseTypes.map(type => (
-                    <SelectItem key={type} value={type}>{type}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Button 
-                variant="outline" 
-                onClick={() => setFilters({semester: "all", department: "all", type: "all", search: ""})}
-                className="w-full"
-              >
-                Clear Filters
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Results */}
-        <div className="mb-6">
-          <p className="text-slate-600">
-            Showing {filteredCourses.length} course{filteredCourses.length !== 1 ? 's' : ''}
-          </p>
-        </div>
-
-        {/* Course Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCourses.map(course => (
-            <Card 
-              key={course.id} 
-              className="cursor-pointer hover:shadow-xl transition-all duration-300 border-0 shadow-lg group"
-              onClick={() => setSelectedCourse(course)}
+      <div className="relative z-10 pt-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+          <div className="flex items-center gap-4 mb-8 animate-fade-in">
+            <Button 
+              variant="ghost" 
+              onClick={onBack}
+              className="flex items-center gap-2 hover:bg-white/60 hover:shadow-lg transition-all duration-300 rounded-xl px-6 py-3"
             >
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg mb-2 group-hover:text-blue-600 transition-colors">
-                      {course.title}
-                    </CardTitle>
-                    <div className="flex items-center gap-4 text-sm text-slate-600">
-                      <span className="flex items-center gap-1">
-                        <BookOpen className="h-4 w-4" />
-                        {course.department}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        Sem {course.semester}
-                      </span>
+              <ArrowLeft className="h-4 w-4" />
+              Back to Home
+            </Button>
+            <div className="flex items-center gap-3">
+              <GraduationCap className="h-8 w-8 text-blue-600" />
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">
+                Explore Courses
+              </h1>
+              <Sparkles className="h-6 w-6 text-yellow-500 animate-pulse" />
+            </div>
+          </div>
+
+          {/* Enhanced Filters */}
+          <Card className="mb-8 border-0 shadow-2xl bg-white/80 backdrop-blur-xl animate-fade-in" style={{animationDelay: '0.1s'}}>
+            <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-lg">
+              <CardTitle className="flex items-center gap-3 text-2xl">
+                <Filter className="h-6 w-6 text-blue-600" />
+                <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Filter Courses
+                </span>
+                <span className="text-2xl">🔍</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div className="relative group">
+                  <Search className="absolute left-4 top-4 h-5 w-5 text-slate-400 group-hover:text-blue-500 transition-colors" />
+                  <Input
+                    placeholder="Search courses..."
+                    value={filters.search}
+                    onChange={(e) => setFilters({...filters, search: e.target.value})}
+                    className="pl-12 h-12 rounded-xl border-2 border-slate-200 hover:border-blue-300 focus:border-blue-500 transition-all duration-300 bg-white/60"
+                  />
+                </div>
+                
+                <Select value={filters.semester} onValueChange={(value) => setFilters({...filters, semester: value})}>
+                  <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition-all duration-300 bg-white/60">
+                    <SelectValue placeholder="📅 Semester" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Semesters</SelectItem>
+                    {semesters.map(sem => (
+                      <SelectItem key={sem} value={sem.toString()}>Semester {sem}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={filters.department} onValueChange={(value) => setFilters({...filters, department: value})}>
+                  <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition-all duration-300 bg-white/60">
+                    <SelectValue placeholder="🏢 Department" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Departments</SelectItem>
+                    {departments.map(dept => (
+                      <SelectItem key={dept} value={dept}>{dept}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={filters.type} onValueChange={(value) => setFilters({...filters, type: value})}>
+                  <SelectTrigger className="h-12 rounded-xl border-2 border-slate-200 hover:border-blue-300 transition-all duration-300 bg-white/60">
+                    <SelectValue placeholder="📚 Course Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Types</SelectItem>
+                    {courseTypes.map(type => (
+                      <SelectItem key={type} value={type}>{type}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Button 
+                  variant="outline" 
+                  onClick={() => setFilters({semester: "all", department: "all", type: "all", search: ""})}
+                  className="h-12 rounded-xl border-2 border-slate-200 hover:border-red-300 hover:bg-red-50 transition-all duration-300 bg-white/60"
+                >
+                  🗑️ Clear Filters
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Results Counter */}
+          <div className="mb-8 animate-fade-in" style={{animationDelay: '0.2s'}}>
+            <div className="bg-white/60 rounded-xl p-4 border border-white/40 shadow-lg backdrop-blur-sm">
+              <p className="text-slate-700 text-lg font-medium flex items-center gap-2">
+                <span className="text-2xl">📊</span>
+                Showing <span className="font-bold text-blue-600">{filteredCourses.length}</span> course{filteredCourses.length !== 1 ? 's' : ''}
+              </p>
+            </div>
+          </div>
+
+          {/* Enhanced Course Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredCourses.map((course, index) => (
+              <Card 
+                key={course.id} 
+                className="cursor-pointer hover:shadow-2xl hover:scale-105 transition-all duration-500 border-0 shadow-xl group bg-white/80 backdrop-blur-sm hover:bg-white/90 animate-fade-in"
+                onClick={() => setSelectedCourse(course)}
+                style={{animationDelay: `${0.3 + index * 0.1}s`}}
+              >
+                <CardHeader className="pb-4">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-xl mb-3 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
+                        {course.title}
+                      </CardTitle>
+                      <div className="flex items-center gap-4 text-sm text-slate-600 mb-2">
+                        <span className="flex items-center gap-1 bg-blue-50 px-3 py-1 rounded-full">
+                          <BookOpen className="h-4 w-4" />
+                          {course.department}
+                        </span>
+                        <span className="flex items-center gap-1 bg-green-50 px-3 py-1 rounded-full">
+                          <Clock className="h-4 w-4" />
+                          Sem {course.semester}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-1 bg-yellow-50 px-3 py-2 rounded-full">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="font-bold text-yellow-600">{course.rating}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-sm">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-medium">{course.rating}</span>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
-                      {course.type}
-                    </span>
-                    <span className="text-sm text-slate-600">{course.credits} Credits</span>
-                  </div>
-                  
-                  <p className="text-sm text-slate-600 line-clamp-2">
-                    {course.description}
-                  </p>
-                  
-                  <div className="pt-2 border-t">
-                    <p className="text-sm text-slate-600">
-                      <span className="font-medium">Professor:</span> {course.professor}
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-block px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 text-sm font-medium rounded-full border border-blue-200">
+                        {course.type}
+                      </span>
+                      <span className="text-sm font-semibold text-slate-700 bg-gray-50 px-3 py-1 rounded-full">
+                        {course.credits} Credits
+                      </span>
+                    </div>
+                    
+                    <p className="text-sm text-slate-600 leading-relaxed line-clamp-2">
+                      {course.description}
                     </p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {course.reviews} reviews
-                    </p>
+                    
+                    <div className="pt-3 border-t border-slate-100">
+                      <p className="text-sm text-slate-700 mb-2">
+                        <span className="font-semibold">👨‍🏫 Professor:</span> {course.professor}
+                      </p>
+                      <p className="text-xs text-slate-500 flex items-center gap-1">
+                        <span>💬</span>
+                        {course.reviews} reviews
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {filteredCourses.length === 0 && (
-          <div className="text-center py-12">
-            <BookOpen className="h-16 w-16 text-slate-300 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">No courses found</h3>
-            <p className="text-slate-600">Try adjusting your filters to see more results.</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        )}
+
+          {/* Enhanced Empty State */}
+          {filteredCourses.length === 0 && (
+            <div className="text-center py-16 animate-fade-in">
+              <div className="bg-white/60 rounded-2xl p-12 backdrop-blur-sm border border-white/40 shadow-xl max-w-md mx-auto">
+                <div className="text-6xl mb-6">📚</div>
+                <BookOpen className="h-16 w-16 text-slate-300 mx-auto mb-6" />
+                <h3 className="text-2xl font-bold text-slate-900 mb-3">No courses found</h3>
+                <p className="text-slate-600 text-lg">Try adjusting your filters to discover more amazing courses!</p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
