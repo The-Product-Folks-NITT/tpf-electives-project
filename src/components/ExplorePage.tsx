@@ -19,7 +19,7 @@ const mockCourses = [
     rating: 4.5,
     reviews: 28,
     credits: 3,
-    description: "Introduction to machine learning algorithms and their applications"
+    description: "Introduction to machine learning algorithms and their applications in real-world scenarios"
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const mockCourses = [
     rating: 4.2,
     reviews: 15,
     credits: 3,
-    description: "Signal processing techniques for digital systems"
+    description: "Signal processing techniques for digital systems and communication"
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const mockCourses = [
     rating: 4.7,
     reviews: 22,
     credits: 4,
-    description: "Data-driven decision making in business contexts"
+    description: "Data-driven decision making in business contexts using statistical methods"
   },
   {
     id: 4,
@@ -55,7 +55,7 @@ const mockCourses = [
     rating: 4.8,
     reviews: 35,
     credits: 3,
-    description: "Full-stack web development with modern frameworks"
+    description: "Full-stack web development with modern frameworks and technologies"
   },
   {
     id: 5,
@@ -80,6 +80,174 @@ const mockCourses = [
     reviews: 12,
     credits: 4,
     description: "Understanding financial markets and investment strategies"
+  },
+  {
+    id: 7,
+    title: "Data Structures & Algorithms",
+    department: "Computer Science",
+    type: "Program Elective",
+    semester: 4,
+    professor: "Dr. Amit Verma",
+    rating: 4.6,
+    reviews: 42,
+    credits: 4,
+    description: "Advanced data structures and algorithmic problem-solving techniques"
+  },
+  {
+    id: 8,
+    title: "Digital Marketing",
+    department: "Management",
+    type: "Open Elective",
+    semester: 6,
+    professor: "Dr. Pooja Singh",
+    rating: 4.3,
+    reviews: 31,
+    credits: 3,
+    description: "Modern digital marketing strategies and social media analytics"
+  },
+  {
+    id: 9,
+    title: "Robotics & Automation",
+    department: "Mechanical Engineering",
+    type: "Program Elective",
+    semester: 7,
+    professor: "Dr. Kiran Gupta",
+    rating: 4.5,
+    reviews: 26,
+    credits: 4,
+    description: "Industrial robotics, automation systems, and control mechanisms"
+  },
+  {
+    id: 10,
+    title: "Mobile App Development",
+    department: "Computer Science",
+    type: "Open Elective",
+    semester: 5,
+    professor: "Dr. Ankit Jain",
+    rating: 4.7,
+    reviews: 38,
+    credits: 3,
+    description: "Native and cross-platform mobile application development"
+  },
+  {
+    id: 11,
+    title: "Quantum Computing",
+    department: "Physics",
+    type: "Minor",
+    semester: 8,
+    professor: "Dr. Neha Agarwal",
+    rating: 4.9,
+    reviews: 14,
+    credits: 4,
+    description: "Quantum algorithms, quantum gates, and quantum information theory"
+  },
+  {
+    id: 12,
+    title: "Blockchain Technology",
+    department: "Computer Science",
+    type: "Open Elective",
+    semester: 7,
+    professor: "Dr. Rahul Mehta",
+    rating: 4.4,
+    reviews: 29,
+    credits: 3,
+    description: "Cryptocurrency, smart contracts, and distributed ledger systems"
+  },
+  {
+    id: 13,
+    title: "Renewable Energy Systems",
+    department: "Electrical Engineering",
+    type: "Program Elective",
+    semester: 6,
+    professor: "Dr. Sunita Rao",
+    rating: 4.2,
+    reviews: 21,
+    credits: 3,
+    description: "Solar, wind, and other renewable energy technologies"
+  },
+  {
+    id: 14,
+    title: "UI/UX Design",
+    department: "Design",
+    type: "Open Elective",
+    semester: 5,
+    professor: "Prof. Maya Krishnan",
+    rating: 4.8,
+    reviews: 33,
+    credits: 3,
+    description: "User interface design principles and user experience research"
+  },
+  {
+    id: 15,
+    title: "Artificial Intelligence",
+    department: "Computer Science",
+    type: "Program Elective",
+    semester: 7,
+    professor: "Dr. Sanjay Mishra",
+    rating: 4.6,
+    reviews: 41,
+    credits: 4,
+    description: "AI fundamentals, neural networks, and intelligent systems"
+  },
+  {
+    id: 16,
+    title: "Operations Research",
+    department: "Industrial Engineering",
+    type: "Minor",
+    semester: 6,
+    professor: "Dr. Ravi Teja",
+    rating: 4.1,
+    reviews: 19,
+    credits: 3,
+    description: "Optimization techniques and decision-making in complex systems"
+  },
+  {
+    id: 17,
+    title: "Cloud Computing",
+    department: "Computer Science",
+    type: "Open Elective",
+    semester: 6,
+    professor: "Dr. Deepika Sharma",
+    rating: 4.5,
+    reviews: 27,
+    credits: 3,
+    description: "Cloud platforms, distributed computing, and service-oriented architecture"
+  },
+  {
+    id: 18,
+    title: "Cybersecurity",
+    department: "Computer Science",
+    type: "Program Elective",
+    semester: 8,
+    professor: "Dr. Vinod Kumar",
+    rating: 4.7,
+    reviews: 24,
+    credits: 4,
+    description: "Network security, cryptography, and ethical hacking techniques"
+  },
+  {
+    id: 19,
+    title: "Game Development",
+    department: "Computer Science",
+    type: "Open Elective",
+    semester: 5,
+    professor: "Prof. Arjun Shah",
+    rating: 4.9,
+    reviews: 36,
+    credits: 3,
+    description: "2D/3D game engines, game physics, and interactive entertainment design"
+  },
+  {
+    id: 20,
+    title: "Internet of Things",
+    department: "Electronics",
+    type: "Program Elective",
+    semester: 7,
+    professor: "Dr. Meera Joshi",
+    rating: 4.3,
+    reviews: 30,
+    credits: 3,
+    description: "IoT architecture, sensor networks, and connected device ecosystems"
   }
 ];
 
@@ -96,7 +264,7 @@ const ExplorePage = ({ onBack }: ExplorePageProps) => {
     search: ""
   });
 
-  const departments = ["Computer Science", "Electronics", "Management", "Civil Engineering", "Mechanical Engineering"];
+  const departments = ["Computer Science", "Electronics", "Management", "Civil Engineering", "Mechanical Engineering", "Electrical Engineering", "Physics", "Design", "Industrial Engineering"];
   const courseTypes = ["Program Elective", "Open Elective", "Minor"];
   const semesters = [3, 4, 5, 6, 7, 8];
 
