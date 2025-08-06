@@ -12,7 +12,7 @@ const About = () => {
             <Card className="border-0 shadow-lg bg-gradient-to-r from-blue-50 to-purple-50">
               <CardContent className="p-8">
                 <p className="text-lg text-slate-700 leading-relaxed">
-                  <span className="font-semibold text-blue-600">An initiative by The Product Folks NIT Trichy</span> to 
+                  A comprehensive platform to 
                   simplify elective discovery for students. Get reviews, grading patterns, and professor insights in one place. 
                   We believe every student deserves to make informed decisions about their academic journey.
                 </p>
