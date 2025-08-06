@@ -28,7 +28,7 @@ const Navigation = ({ currentPage, onPageChange }: NavigationProps) => {
               )}
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-              Electives@Trichy
+              CoursePilot
             </span>
           </div>
           
