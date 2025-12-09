@@ -14,7 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      courses: {
+        Row: {
+          avg_grading_ease: number | null
+          created_at: string
+          department: string
+          id: string
+          name: string
+          review_count: number | null
+          updated_at: string
+        }
+        Insert: {
+          avg_grading_ease?: number | null
+          created_at?: string
+          department: string
+          id?: string
+          name: string
+          review_count?: number | null
+          updated_at?: string
+        }
+        Update: {
+          avg_grading_ease?: number | null
+          created_at?: string
+          department?: string
+          id?: string
+          name?: string
+          review_count?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          department: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+          year_of_study: string | null
+        }
+        Insert: {
+          created_at?: string
+          department?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+          year_of_study?: string | null
+        }
+        Update: {
+          created_at?: string
+          department?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+          year_of_study?: string | null
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          course_id: string
+          created_at: string
+          exam_structure: string
+          extra_classes: string
+          general_comments: string | null
+          grading_comments: string | null
+          grading_ease: number
+          id: string
+          leniency: string
+          teaching_method: string
+          user_id: string
+          year_of_study: string
+        }
+        Insert: {
+          course_id: string
+          created_at?: string
+          exam_structure: string
+          extra_classes: string
+          general_comments?: string | null
+          grading_comments?: string | null
+          grading_ease: number
+          id?: string
+          leniency: string
+          teaching_method: string
+          user_id: string
+          year_of_study: string
+        }
+        Update: {
+          course_id?: string
+          created_at?: string
+          exam_structure?: string
+          extra_classes?: string
+          general_comments?: string | null
+          grading_comments?: string | null
+          grading_ease?: number
+          id?: string
+          leniency?: string
+          teaching_method?: string
+          user_id?: string
+          year_of_study?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
